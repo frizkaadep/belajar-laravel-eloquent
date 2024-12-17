@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use League\CommonMark\Extension\CommonMark\Node\Block\ThematicBreak;
 
 class Product extends Model
@@ -17,6 +18,11 @@ class Product extends Model
     protected $keyType = 'string';
     public $incrementing = false;
     public $timestamps = false;
+
+    // agar tidak di tampilkan saat prosess serialization
+    protected $hidden = [
+        "category_id"
+    ];
 
     public function category(): BelongsTo
     {
@@ -55,5 +61,10 @@ class Product extends Model
     {
         return $this->morphOne(Comment::class, "commentable")
             ->oldest("created_at");
+    }
+
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Tag::class, "taggable");
     }
 }

@@ -28,7 +28,7 @@ class CommentSeeder extends Seeder
         $comment1->title = "Title";
         $comment1->comment = "Comment Product";
         $comment1->commentable_id = $product->id;
-        $comment1->commentable_type = Product::class;
+        $comment1->commentable_type = 'product';
         $comment1->save();
     }
 
@@ -41,7 +41,7 @@ class CommentSeeder extends Seeder
         $comment1->title = "Title";
         $comment1->comment = "Comment Voucher";
         $comment1->commentable_id = $voucher->id;
-        $comment1->commentable_type = Voucher::class;
+        $comment1->commentable_type = 'voucher';
         $comment1->save();
     }
 }

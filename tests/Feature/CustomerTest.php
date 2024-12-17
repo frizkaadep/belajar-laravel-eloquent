@@ -21,7 +21,7 @@ class CustomerTest extends TestCase
 {
     public function testOneToOne()
     {
-        $this->seed(CustomerSeeder::class, WalletSeeder::class);
+        $this->seed([CustomerSeeder::class, WalletSeeder::class]);
 
         $customer = Customer::find("ADE");
         self::assertNotNull($customer);
@@ -148,5 +148,27 @@ class CustomerTest extends TestCase
         $image = $customer->image;
         self::assertNotNull($image);
         self::assertEquals("https://www.programmerzamannow.com/images/1.jpg", $image->url);
+    }
+
+    public function testEager()
+    {
+        $this->seed([CustomerSeeder::class, WalletSeeder::class, ImageSeeder::class]);
+
+        // metode lazy loading (relasi terbentuk saat data di butuhkan saja)
+        // $customer = Customer::find("ADE");
+        // metode Eager loading (relasi terbentuk dari awal)
+        $customer = Customer::with(["wallet", "image"])->find("ADE");
+        self::assertNotNull($customer);
+
+        // $customer->wallet;
+        // $customer->image;
+    }
+
+    public function testEagerModel()
+    {
+        $this->seed([CustomerSeeder::class, WalletSeeder::class, ImageSeeder::class]);
+
+        $customer = Customer::find("ADE");
+        self::assertNotNull($customer);
     }
 }

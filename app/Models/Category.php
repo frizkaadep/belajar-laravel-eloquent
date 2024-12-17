@@ -22,6 +22,11 @@ class Category extends Model
         "description"
     ];
 
+    // merubah format timestamps
+    protected $casts = [
+        'created_at' => 'datetime:U'
+    ];
+
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'category_id', 'id');
